@@ -1,6 +1,3 @@
-//Dependency Injection --> A class receives the objects it depends on from outside, instead of creating
-//those objects itself.
-
 package in.thirdLecture;
 
 import in.thirdLecture.notification.NotificationService;
@@ -15,3 +12,11 @@ public class Main {
         order.placeOrder();
     }
 }
+
+//Dependency Injection --> A class receives the objects it depends on from outside, instead of creating
+//those objects itself.
+
+//IOC -- Inversion of Control : a principle that says class should not create objects, instead it should ask other class to send objcets that are needed by it
+
+// IOC -- Principle
+// DI -- Implementation of IOC
