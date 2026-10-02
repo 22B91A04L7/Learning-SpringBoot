@@ -16,3 +16,8 @@ public class Main {
 
 //Circular dependency --> when two or more classes depend on other classes directly and indirectly. spring will give error
 //beacause spring cannot decide which bean to create first.
+
+//CD can be avoided using Setter Injection or Field Injection but its not a good practice.
+// Also spring boot by default wont support circular references so setter and field injecion's fails.
+
+// CD can be avoided by making clear boundaries for the class responsibilities -- follow SRP
