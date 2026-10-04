@@ -4,10 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class B {
-//    private OrderService order;
-//
-//    @Autowired
-//    public B(OrderService order){
-//        this.order = order;
-//    }
+    private OrderService order;
+
+    @Autowired
+    public B(OrderService order){
+        this.order = order;
+    }
 }

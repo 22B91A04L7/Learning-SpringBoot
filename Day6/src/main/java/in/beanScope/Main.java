@@ -16,6 +16,8 @@ public class Main {
 //Bean Scopes : 1.Singleton 2. Prototype
 // Singleton --> IOC container is up one bean is created and will be used by all refences created using getBean().
 // Spring does not create multiple beans for multiple dependencies in singleton -- order == order2 is true
+// must be used in stateless classes --> classes with only methods, i.e does not contain properties. Ex. OrderService class
 
 //Prototype : when IOC container becomes, bean will not be created. Beans are created separately for the references created using getBean()
 // Spring creates multiple beans for multiple references -- order == order2 is false.
+// must be used for statefull classes --> class with one or more properties. Ex. User class
