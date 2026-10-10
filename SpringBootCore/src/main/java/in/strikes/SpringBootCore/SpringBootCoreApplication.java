@@ -33,4 +33,4 @@ public class SpringBootCoreApplication {
 // --> @ConditionalOnClass(class_name.class) --> configures only when class is present
 // --> @ConditionalOnMissingBean --> creates default bean only when developer has not created it manually.
 
-//Eg : when spring-boot-starter-web dependency is added some pre configured files are auto configured and tomcat server is initialized.
+//Eg : when spring-boot-starter-web dependency is added some pre-configured files are autoconfigured and tomcat server is initialized.
