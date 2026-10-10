@@ -27,6 +27,9 @@ public class SpringBootCore2Application {
 }
 //application.properties, application.yml are configuration files i.e. non-Java files that can be used to inject values
 // to dependencies without changing actual java code. This avoids hardcoding of values.
+// values can be injected from application.properties file using two annotations :
+//@Value --> used when class has few properties.
+// @ConfiguartionProperties --> user when class has more properties.
 
 // Spring Boot automatically loads this file when the application starts.
 
