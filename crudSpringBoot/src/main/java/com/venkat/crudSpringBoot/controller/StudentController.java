@@ -30,8 +30,8 @@ public class StudentController {
     }
 
     //read student by id
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getStudent( @PathVariable Long id) {
+    @GetMapping("/get")
+    public ResponseEntity<Student> getStudent( @RequestParam Long id) {
         Student foundStudent = studentService.findStudent(id);
         if(foundStudent == null){
             return ResponseEntity.notFound().build();

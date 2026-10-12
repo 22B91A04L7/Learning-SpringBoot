@@ -69,7 +69,7 @@ public class StudentService {
     }
 
     public Boolean deleteStudentSoft(Long id){
-        Optional<Student> studentResp = studentRepository.findById(id);
+        Optional<Student> studentResp = studentRepository.findByIdAndDeletedIsFalse(id);
         if(studentResp.isEmpty()) return false;
         Student studentToSave = studentResp.get();
         studentToSave.setDeleted(true);
