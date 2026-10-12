@@ -7,12 +7,12 @@ import jakarta.persistence.Id;
 public class Student {
     @Id
     private Long id;
-
     private String name;
     private int age;
     private String email;
     private int rollNo;
     private String subject;
+    private Boolean deleted;
 
     public Long getId() {
         return id;
@@ -28,6 +28,14 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     public int getAge() {
