@@ -57,4 +57,4 @@ public class Main {
 // Embed Tomcat --> Listens incoming requests and uses dispatcher servet to map controllers
 // Jackson --> dependency that convers json to Java objects
 
-//Springboot comes with everything auto-configured in it.
+//Springboot comes with everything auto-configured in it. we simply add springboot-starter-web dependency.
