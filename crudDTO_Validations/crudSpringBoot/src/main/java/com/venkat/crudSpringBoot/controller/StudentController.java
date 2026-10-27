@@ -6,6 +6,7 @@ import com.venkat.crudSpringBoot.dto.UpdateStudentReqDto;
 import com.venkat.crudSpringBoot.dto.UpdateStudentRespDto;
 import com.venkat.crudSpringBoot.entity.Student;
 import com.venkat.crudSpringBoot.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class StudentController {
 
     //create student
     @PostMapping("/create")
-    public ResponseEntity<CreateStudentRespDto> createStudent(@RequestBody CreateStudentReqDto createStudentReqDto){
+    public ResponseEntity<CreateStudentRespDto> createStudent(@Valid @RequestBody CreateStudentReqDto createStudentReqDto){
         CreateStudentRespDto createdStudent = studentService.createStudent(createStudentReqDto); // asking service layer
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
@@ -53,7 +54,7 @@ public class StudentController {
     //update a student
     @PutMapping("/update/{id}")
     public ResponseEntity<UpdateStudentRespDto> updateStudent(@PathVariable Long id,
-                                                 @RequestBody UpdateStudentReqDto studentReqDto){
+                                                 @Valid @RequestBody UpdateStudentReqDto studentReqDto){
         UpdateStudentRespDto updatedStudent = studentService.updateStudent(id, studentReqDto);
         if(updatedStudent == null){
             return  ResponseEntity.notFound().build();

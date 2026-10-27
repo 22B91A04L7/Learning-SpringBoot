@@ -1,8 +1,19 @@
 package com.venkat.crudSpringBoot.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class UpdateStudentReqDto {
+
+    @NotBlank(message = "Name cannot be null or blank or empty spaces")
     private String name;
+
+    @NotNull(message = "Age cannot be empty")
+    @Min(value = 18, message = "Age must be greater than 17")
     private int age;
+
+    @NotBlank(message = "subject cannot be empty or blank or null")
     private String subject;
 
     public String getName() {
