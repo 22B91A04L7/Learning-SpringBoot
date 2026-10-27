@@ -5,10 +5,13 @@ import com.venkat.crudSpringBoot.dto.CreateStudentRespDto;
 import com.venkat.crudSpringBoot.dto.UpdateStudentReqDto;
 import com.venkat.crudSpringBoot.dto.UpdateStudentRespDto;
 import com.venkat.crudSpringBoot.entity.Student;
+import com.venkat.crudSpringBoot.exception.DuplicateResourceException;
+import com.venkat.crudSpringBoot.exception.ResourceNotFoundException;
 import com.venkat.crudSpringBoot.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -25,19 +28,28 @@ public class StudentService {
 
     //to create a student
     public CreateStudentRespDto createStudent(CreateStudentReqDto createStudentReqDto) {
-        Student studentReq = mapToEntity(createStudentReqDto);
-        Student studentResponse = studentRepository.save(studentReq); // asking repository layer
+        Student student = mapToEntity(createStudentReqDto);
+
+        if(emailExists(student)){
+            throw new DuplicateResourceException
+                    ("Student with " + student.getEmail() + " already exists!!");
+        }
+        else if(rollNoExists(student)){
+            throw new DuplicateResourceException
+                    ("Student with rollNo " + student.getRollNo() + " already exists");
+        }
+
+        Student studentResponse = studentRepository.save(student); // asking repository layer
         return mapToDto(studentResponse);
     }
 
     // to read a single student details
     public UpdateStudentRespDto findStudent(Long id){
-        Optional<Student> studentResponse = studentRepository.findByIdAndDeletedIsFalse(id);
-       if(studentResponse.isEmpty()){
-           return null;
-       }
-       Student foundStudent = studentResponse.get();
-       return mapToUpdatedDto(foundStudent);
+        Student studentResponse = studentRepository.
+                findByIdAndDeletedIsFalse(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student with id " +id + " not found"));
+       return mapToUpdatedDto(studentResponse);
     }
 
     // to get all students details
@@ -49,36 +61,36 @@ public class StudentService {
 
     // to update studeny with id
     public UpdateStudentRespDto updateStudent(Long id, UpdateStudentReqDto incomingStudentDto){
-       Optional<Student> studentResp = studentRepository.findByIdAndDeletedIsFalse(id);
-       if(studentResp.isEmpty()){
-           return null;
-       }
-       Student existingStudent = studentResp.get();
+       Student existingStudent = studentRepository.
+               findByIdAndDeletedIsFalse(id)
+               .orElseThrow(() ->
+                       new ResourceNotFoundException("Student with id "+ id + " not found"));
+
        existingStudent.setName(incomingStudentDto.getName());
        existingStudent.setAge(incomingStudentDto.getAge());
        existingStudent.setSubject(incomingStudentDto.getSubject());
-//       existingStudent.setDeleted(false); // Ensure it stays active
+       existingStudent.setUpdatedAt(LocalDateTime.now());
+
         Student updatedStudentResp = studentRepository.save(existingStudent);
        return mapToUpdatedDto(updatedStudentResp);
     }
 
     // to delete a student
-    public String deleteStudent(Long id){
-        Optional<Student> isExisting = studentRepository.findById(id);
-        if(!isExisting.isPresent()){
-            return "Student does not exist";
-        }
-        studentRepository.deleteById(id);
-        return "Student Deleted Successfully";
+    public void deleteStudent(Long id){
+        Student existingStudent = studentRepository
+                .findById(id).orElseThrow(() ->
+                        new ResourceNotFoundException("User with id " + id+ " not found"));
+        studentRepository.delete(existingStudent);
+        return;
     }
 
-    public Boolean deleteStudentSoft(Long id){
-        Optional<Student> studentResp = studentRepository.findByIdAndDeletedIsFalse(id);
-        if(studentResp.isEmpty()) return false;
-        Student studentToSave = studentResp.get();
+    public void deleteStudentSoft(Long id){
+        Student studentToSave = studentRepository
+                .findByIdAndDeletedIsFalse(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id+ " not found"));
+
         studentToSave.setDeleted(true);
         studentRepository.save(studentToSave);
-        return true;
     }
 
     private Student mapToEntity(CreateStudentReqDto createStudentReqDto){
@@ -124,6 +136,14 @@ public class StudentService {
         studentRespDto.setUpdatedAt(LocalDateTime.now());
         studentRespDto.setMessage("Student updated successfully");
         return studentRespDto;
+    }
+
+    private Boolean emailExists(Student student){
+       return studentRepository.existsByEmail(student.getEmail());
+    }
+
+    private Boolean rollNoExists(Student student){
+        return studentRepository.existsByRollNo(student.getRollNo());
     }
 
 }
