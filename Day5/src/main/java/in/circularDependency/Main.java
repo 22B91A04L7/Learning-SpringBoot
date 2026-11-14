@@ -18,6 +18,6 @@ public class Main {
 //beacause spring cannot decide which bean to create first.
 
 //CD can be avoided using Setter Injection or Field Injection but its not a good practice.
-// Also spring boot by default wont support circular references so setter and field injecion's fails.
+// Also spring boot by default won't support circular references so setter and field injecion's fails, but can be manullay enabled.
 
-// CD can be avoided by making clear boundaries for the class responsibilities -- follow SRP
+// CD can be avoided by making clear boundaries for the class responsibilities -- follow SRP, Code Refractoring helps..
