@@ -12,9 +12,10 @@ public class FiltersDemoApplication {
 
 }
 
-//Filters : allows to handle common http level logic that is handled by every controller
+//Filters : allows to handle common http level logic that is handled by every controller.
+// Filters --> not a spring feature, comes with servlet api
 // Fiters are mainly used for:
-//	1. Logging
+//	1. Logging purpose
 //	2. Authentication and Authorization
 //	3. Measuring Response time
 //	4. Accessing Headers

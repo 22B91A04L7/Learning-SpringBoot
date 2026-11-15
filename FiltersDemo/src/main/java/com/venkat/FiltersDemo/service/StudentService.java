@@ -9,5 +9,10 @@ public class StudentService {
         System.out.println("Student created!");
         System.out.println(student.getName());
         System.out.println(student.getEmail());
+
+        try {
+            Thread.sleep(2000);
+        }
+        catch (Exception e){};
     }
 }
